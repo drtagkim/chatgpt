@@ -3,6 +3,8 @@
 export(ask_chatgpt)
 export(gpt_sent)
 importFrom(stringr,str_extract)
+importFrom(rvest,read_html)
+importFrom(rvest,html_table)
 importFrom(magrittr,`%>%`)
 importFrom(stringr,str_remove)
 importFrom(stringr,fixed)
