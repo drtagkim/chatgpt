@@ -4,7 +4,7 @@
 \alias{gpt_sent}
 \title{Get GPT Sentiment Analysis Result}
 \usage{
-result = gpt_sent(text) %>% as.numeric()
+result = gpt_sent(text)
 }
 \arguments{
 \item{text}{a message}
