@@ -7,6 +7,6 @@ Score range should be -1(negative) to 1(positive)
 Text:'
   p1=paste0(p0,txt)
   x=ask_chatgpt(p1)
-  y=x %>% str_match('[0-1.-]+[0-9]{0,2}') %>% as.numeric()
+  y=x %>% str_extract('[0-1.-]+[0-9]{0,2}') %>% as.numeric()
   y
 }
