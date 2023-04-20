@@ -2,6 +2,7 @@
 
 export(ask_chatgpt)
 export(gpt_sent)
+export(gpt_entity)
 importFrom(rvest,read_html)
 importFrom(rvest,html_table)
 importFrom(magrittr,`%>%`)
