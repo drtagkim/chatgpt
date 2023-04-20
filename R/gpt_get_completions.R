@@ -24,35 +24,12 @@ gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_
   if (as.logical(Sys.getenv("OPENAI_VERBOSE", TRUE))) {
     cat(paste0("\n*** ChatGPT input:\n\n", prompt, "\n"))
   }
-  if (grepl("gpt-3.5-turbo", model)) {
-    return_language <- Sys.getenv("OPENAI_RETURN_LANGUAGE")
-    if (nchar(return_language) > 0) {
-      return_language <- paste0("You return all your replies in ", return_language, ".")
-    }
-    messages <- list(
-      list(
-        role = "system",
-        content = paste(
-          "You are a helpful assistant with extensive knowledge of R programming.",
-          return_language
-        )
-      ),
-      list(role = "user", content = prompt)
-    )
-    post_res <- POST(
-      "https://api.openai.com/v1/chat/completions",
-      add_headers("Authorization" = paste("Bearer", openai_api_key)),
-      content_type_json(),
-      body = toJSON(c(params, list(messages = messages)), auto_unbox = TRUE)
-    )
-  } else {
-    post_res <- POST(
-      "https://api.openai.com/v1/completions",
-      add_headers("Authorization" = paste("Bearer", openai_api_key)),
-      content_type_json(),
-      body = toJSON(c(params, list(prompt = prompt)), auto_unbox = TRUE)
-    )
-  }
+  post_res <- POST(
+    "https://api.openai.com/v1/completions",
+    add_headers("Authorization" = paste("Bearer", openai_api_key)),
+    content_type_json(),
+    body = toJSON(c(params, list(prompt = prompt)), auto_unbox = TRUE)
+  )
   if (!post_res$status_code %in% 200:299) {
     stop(content(post_res))
   }
