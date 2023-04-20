@@ -7,6 +7,6 @@ gpt_sent <- function(txt) {
     sep = '\n'
   )
   r0 = ask_chatgpt(paste0(prompt,"\ntext:",txt))
-  r1 = r0 %>% str_extract('[01]?\\.[0-9]{1,2}')
-  r1
+  r1 = str_extract(r0,'[01]?\\.[0-9]{1,2}')
+  r1 %>% as.numeric()
 }
