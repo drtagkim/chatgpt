@@ -1,14 +1,22 @@
 gpt_sent <- function(txt) {
-  p1="for each item do sentiment analysis.
+  p1="For each item do sentiment analysis.
 Range from -1 to 1.
-Set sentiment scores as a variable of OutputVector, decimal 2.
-show me OutputVector."
-  p2=p2=paste(txt,collapse='\n')
+Show me scores in HTML table at the end."
+  if(length(txt)==1) {
+    txt1=c(txt,"null")
+  } else {
+    txt1=txt
+  }
+  p2=paste(txt1,collapse='\n')
   prompt=paste0(p1,"\nitems:\n",p2)
   x = ask_chatgpt(prompt)
-  y=str_extract(x,"OutputVector: .*$") %>% 
-    str_remove(fixed("OutputVector: [")) %>% 
-    str_remove(fixed("]")) %>% 
-    str_split(',',simplify = TRUE) %>% as.numeric()
+  y = rvest::read_html(x)
+  y = y %>% html_table()
+  if(length(y)>0) {
+    y=y[[1]]
+    if(length(txt)==1) y=y[1,]
+  } else {
+    y = NULL
+  }
   y
 }
