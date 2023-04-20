@@ -25,7 +25,7 @@ Imports:
   clipr,
   httr,
   dplyr,
-  stringr
+  stringr,
   jsonlite,
   miniUI,
   rstudioapi,
