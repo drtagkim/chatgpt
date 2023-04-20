@@ -9,6 +9,6 @@ show me OutputVector."
   y=str_extract(x,"OutputVector: .*$") %>% 
     str_remove(fixed("OutputVector: [")) %>% 
     str_remove(fixed("]")) %>% 
-    str_split(y,',',simplify = TRUE) %>% as.numeric()
+    str_split(',',simplify = TRUE) %>% as.numeric()
   y
 }
