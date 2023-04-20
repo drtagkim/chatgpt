@@ -3,7 +3,7 @@
 export(ask_chatgpt)
 export(gpt_sent)
 importFrom(stringr,str_extract)
-importFrom(magrittr,%>%)
+importFrom(magrittr,`%>%`)
 importFrom(stringr,str_remove)
 importFrom(stringr,fixed)
 importFrom(stringr,str_split)
