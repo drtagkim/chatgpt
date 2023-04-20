@@ -29,4 +29,5 @@ Imports:
   miniUI,
   rstudioapi,
   shiny,
-  utils
+  utils,
+  rvest
