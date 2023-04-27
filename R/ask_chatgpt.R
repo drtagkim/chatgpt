@@ -11,6 +11,6 @@
 #'
 #' @export
 #'
-ask_chatgpt <- function(question) {
-  parse_response(gpt_get_completions(question))
+ask_chatgpt <- function(question,context=NULL) {
+  parse_response(gpt_get_completions(question,context))
 }
