@@ -6,10 +6,15 @@
 #' @importFrom httr add_headers content content_type_json POST
 #' @importFrom jsonlite toJSON
 #'
-gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+gpt_get_completions <- function(prompt, system_content = NULL,openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
   if (nchar(openai_api_key) == 0) {
     stop("`OPENAI_API_KEY` not provided.")
   }
+  if(is.null(system_content)) {
+    system_content = "You are a helpful assistant. "
+   } else {
+    system_content = paste0("You are a helpful assistant. ", system_content," ")
+   }
   # See https://platform.openai.com/docs/api-reference/chat
   # and https://beta.openai.com/docs/api-reference/completions/create
   model <- Sys.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
@@ -27,7 +32,7 @@ gpt_get_completions <- function(prompt, openai_api_key = Sys.getenv("OPENAI_API_
   if (grepl("gpt-3.5-turbo", model)) {
     return_language <- Sys.getenv("OPENAI_RETURN_LANGUAGE")
     if (nchar(return_language) > 0) {
-      return_language <- paste0("You return all your replies in ", return_language, ".")
+      return_language <- paste0(system_content,"You return all your replies in ", return_language, ".")
     }
     messages <- list(
       list(
