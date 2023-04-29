@@ -31,8 +31,8 @@ ask_chatgpt <- function(question,context=NULL) {
 #'
 teach_chatgpt <- function(question,file=NULL) {
   if(is.null(file)) {
-    parse_response(gpt_get_completions(question,context=NULL))
+    parse_response(gpt_get_completions(question))
   } else {
-    parse_response(gpt_get_completions(question,context=NULL,conversation_file = file))
+    parse_response(gpt_get_completions(question,conversation_file = file))
   }
 }
