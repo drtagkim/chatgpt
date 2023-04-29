@@ -13,7 +13,7 @@ message_factory <- function(user_prompt,system_content=NULL,file=NULL) {
     list(role = "user", content = user_prompt)
   )
   if(!is.null(file)) {
-    mssg=c(fromJSON(file),mssg)
+    mssg=c(fromJSON(file,simplifyDataFrame = FALSE),mssg)
   }
   return(mssg)
 }

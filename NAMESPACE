@@ -2,8 +2,10 @@
 
 export(ask_chatgpt)
 export(teach_chatgpt)
+export(message_factory)
 importFrom(httr,POST)
 importFrom(httr,add_headers)
 importFrom(httr,content)
 importFrom(httr,content_type_json)
 importFrom(jsonlite,toJSON)
+importFrom(jsonlite,fromJSON)
