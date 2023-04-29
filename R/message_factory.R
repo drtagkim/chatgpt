@@ -8,17 +8,12 @@ message_factory <- function(user_prompt,system_content=NULL,file=NULL) {
   if (nchar(return_language) > 0) {
     return_language <- paste0(system_content,"You return all your replies in ", return_language, ".")
   }
+  mssg=list(
+    list(role="system",content=return_language),
+    list(role = "user", content = user_prompt)
+  )
   if(!is.null(file)) {
-    mssg=list(
-      list(role="system",content=return_language),
-      fromJSON(file,simplifyDataFrame = FALSE),
-      list(role = "user", content = user_prompt)
-    )
-  } else {
-    mssg=list(
-      list(role="system",content=return_language),
-      list(role = "user", content = user_prompt)
-    )
+    mssg=c(fromJSON(file),mssg)
   }
   return(mssg)
 }

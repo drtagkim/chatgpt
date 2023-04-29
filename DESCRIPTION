@@ -31,4 +31,4 @@ Imports:
   shiny,
   utils,
   rvest,
-  jsonlite
+  rjson
