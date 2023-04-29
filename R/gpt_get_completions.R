@@ -16,23 +16,13 @@ gpt_get_completions <- function(prompt, system_content = NULL,conversation_file=
   if (as.logical(Sys.getenv("OPENAI_VERBOSE", TRUE))) {
     cat(literal()$echo_user_input_info)
   }
-  if (grepl("gpt-3.5-turbo", model)) {
+  if (grepl(literal()$gpt3_5, model)) {
     messages = message_factory(prompt,system_content,conversation_file)
-    post_res = POST(
-      gen_api_uri_chat(),
-      add_headers("Authorization" = paste("Bearer", openai_api_key)),
-      content_type_json(),
-      body = toJSON(c(params, list(messages = messages)), auto_unbox = TRUE)
-    )
+    post_res = send_data_to_openai_chat(params,messages,openai_api_key)
   } else {
-    post_res <- POST(
-      gen_api_uri_completion(),
-      add_headers("Authorization" = paste("Bearer", openai_api_key)),
-      content_type_json(),
-      body = toJSON(c(params, list(prompt = prompt)), auto_unbox = TRUE)
-    )
+    post_res = send_data_to_openai_completion(params,prompt,openai_api_key)
   }
-  if (!post_res$status_code %in% 200:299) {
+  if (!post_res$status_code %in% literal()$normal_status) {
     stop(content(post_res))
   }
   content(post_res)
