@@ -30,4 +30,5 @@ Imports:
   rstudioapi,
   shiny,
   utils,
-  rvest
+  rvest,
+  jsonlite

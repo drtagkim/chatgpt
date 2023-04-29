@@ -4,10 +4,19 @@
 \alias{gpt_get_completions}
 \title{Get GPT Completions Endpoint}
 \usage{
-gpt_get_completions(prompt, openai_api_key = Sys.getenv("OPENAI_API_KEY"))
+gpt_get_completions(
+  prompt,
+  system_content = NULL,
+  conversation_file = NULL,
+  openai_api_key = Sys.getenv("OPENAI_API_KEY")
+)
 }
 \arguments{
 \item{prompt}{The prompt to generate completions for.}
+
+\item{system_content}{system contents, default = NULL}
+
+\item{conversation_file}{conversation data, default = NULL}
 
 \item{openai_api_key}{OpenAI's API key.}
 }

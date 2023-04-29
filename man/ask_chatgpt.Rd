@@ -4,7 +4,7 @@
 \alias{ask_chatgpt}
 \title{Ask ChatGPT}
 \usage{
-ask_chatgpt(question)
+ask_chatgpt(question, context = NULL)
 }
 \arguments{
 \item{question}{The question to ask ChatGPT.}

@@ -1,20 +1,17 @@
 #' Get GPT Completions Endpoint
 #'
 #' @param prompt The prompt to generate completions for.
+#' @param system_content system contents, default = NULL
+#' @param conversation_file conversation data, default = NULL
 #' @param openai_api_key OpenAI's API key.
 #'
 #' @importFrom httr add_headers content content_type_json POST
 #' @importFrom jsonlite toJSON
 #'
-gpt_get_completions <- function(prompt, system_content = NULL,openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
+gpt_get_completions <- function(prompt, system_content = NULL,conversation_file=NULL,openai_api_key = Sys.getenv("OPENAI_API_KEY")) {
   if (nchar(openai_api_key) == 0) {
     stop("`OPENAI_API_KEY` not provided.")
   }
-  if(is.null(system_content)) {
-    system_content = "You are a helpful assistant. "
-   } else {
-    system_content = paste0("You are a helpful assistant. ", system_content," ")
-   }
   # See https://platform.openai.com/docs/api-reference/chat
   # and https://beta.openai.com/docs/api-reference/completions/create
   model <- Sys.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
@@ -30,20 +27,8 @@ gpt_get_completions <- function(prompt, system_content = NULL,openai_api_key = S
     cat(paste0("\n*** ChatGPT input:\n\n", prompt, "\n"))
   }
   if (grepl("gpt-3.5-turbo", model)) {
-    return_language <- Sys.getenv("OPENAI_RETURN_LANGUAGE")
-    if (nchar(return_language) > 0) {
-      return_language <- paste0(system_content,"You return all your replies in ", return_language, ".")
-    }
-    messages <- list(
-      list(
-        role = "system",
-        content = paste(
-          return_language
-        )
-      ),
-      list(role = "user", content = prompt)
-    )
-    post_res <- POST(
+    messages = message_factory(prompt,system_content,conversation_file)
+    post_res = POST(
       "https://api.openai.com/v1/chat/completions",
       add_headers("Authorization" = paste("Bearer", openai_api_key)),
       content_type_json(),
